@@ -4,7 +4,7 @@
 
 # Lesson 1
 
-# In the example Oscillator.js
+## In the example Oscillator.js
 
 The play, stop, setPitchBend and setVolume are part of the Oscillator's api and play a sound when the user interacts with the screen either through a mouseEnter or a mouseLeave. Ryan elimantes that dependency and boots the app using state. Now the app will always play a sound irrespective of user's interaction with the screen.
 
@@ -19,6 +19,7 @@ When we make things declarative, we get to compose them together.
 Ryan goes further to create a component called Tone to handle the imperative stuff. This allows him to Compose two tones together as how in the example. This idea of "behavioral" React Components—or components that don't render anything but just provide some sort of behavior or state—is still quite novel to me.
 
 # Lesson 2
+## Pin Scoll To Bottom
 
 scrollTo: 
 Window.scrollTo() scrolls to a particular set of coordinates in the document.
