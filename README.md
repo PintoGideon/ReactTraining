@@ -1,6 +1,6 @@
 # My Notes on Class Patterns by Ryan Florence
 
-"One of the things I love about React is that it lets me eliminate time in my code; I don't have to think about time, I just have to think about snapshots in time. At any time in a React app, we can look at the state of the app and then look at the render methods of our components, and we should be able to predict what the screen is going render." — Ryan Florence
+>"One of the things I love about React is that it lets me eliminate time in my code; I don't have to think about time, I just have to think about snapshots in time. At any time in a React app, we can look at the state of the app and then look at the render methods of our components, and we should be able to predict what the screen is going render." — Ryan Florence
 
 # Lesson 1
 
@@ -34,7 +34,7 @@ The Element.clientHeight read-only property is zero for elements with no CSS or 
 scrollTop
 An element's scrollTop value is a measurement of the distance from the element's top to its topmost visible content. When an element's content does not generate a vertical scrollbar, then its scrollTop value is 0.
 
-"You can tell when you've got a good abstraction not just when you can add code easily, but when you can remove code easily." — Michael Jackson
+>"You can tell when you've got a good abstraction not just when you can add code easily, but when you can remove code easily." — Michael Jackson
 
 I am really impressed with how Ryan uses the Component hooks here. I had never seen a use case like this before. He does not use a state for scrollHeight in the PinScrollToBottom component. As messages come in, the state in the App Component changes which triggers a change in PinScrollToBottom firing the ComponentDidUpdate hook.
 
