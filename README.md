@@ -20,18 +20,18 @@ Ryan goes further to create a component called Tone to handle the imperative stu
 
 # Lesson 2
 
--scrollTo
+scrollTo: 
 Window.scrollTo() scrolls to a particular set of coordinates in the document.
 window.scrollTo(x-coord, y-coord)
 window.scrollTo(options)
 
--scrollHeight
+scrollHeight:
 The Element.scrollHeight read-only property is a measurement of the height of an element's content, including content not visible on the screen due to overflow.
 
--clientHeight
+clientHeight: 
 The Element.clientHeight read-only property is zero for elements with no CSS or inline layout boxes; otherwise, it's the inner height of an element in pixels. It includes padding but excludes borders, margins, and horizontal scrollbars (if present).
 
--scrollTop
+scrollTop: 
 An element's scrollTop value is a measurement of the distance from the element's top to its topmost visible content. When an element's content does not generate a vertical scrollbar, then its scrollTop value is 0.
 
 >"You can tell when you've got a good abstraction not just when you can add code easily, but when you can remove code easily." — Michael Jackson
