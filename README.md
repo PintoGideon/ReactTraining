@@ -2,6 +2,29 @@
 
 "One of the things I love about React is that it lets me eliminate time in my code; I don't have to think about time, I just have to think about snapshots in time. At any time in a React app, we can look at the state of the app and then look at the render methods of our components, and we should be able to predict what the screen is going render." — Ryan Florence
 
+#Imperative vs Declarative
+
+Imperative (How)
+
+```javascript
+
+var numbers=[4,2,3,6]
+var total=0
+for(var i=0, i<numbers.length,i++)
+{
+	total+=numbers[i]
+}
+```
+
+Declarative (what)
+
+````javascript
+var numbers=[4,2,3,6]
+numbers.reduce((previous,current)=>{
+	return previous+=current
+})
+```
+
 # Lesson 1
 
 # In the example Oscillator.js
@@ -63,4 +86,169 @@ class PinScrollToBottom extends Component {
 		this.props.children;
 	}
 }
+````
+
+# Lesson 3
+
+## Tabs
+
+### Starting point
+
+The topic of this section is on creating compound components and passing around implicit props in order to make components extendable and changeable in ways other than an ever-growing list of props.
+The code passes an array of objects with the icon and content to the Tabs component which maps over each tab and adds an event listener on it. When a user clicks on each tab, the onclick event toggles the state from active to inactive and vice versa allowing the user to display the content of the highlighted tab.
+
+When a component owns all of the rendering, when you have to do something new or different (e.g. disabling, changing render order, etc.) you end up having to create and expose a new prop. This is more or less the same as how we used to create elements with something like jQueryUI, which handled all rendering on an initial setup, and then exposed some kind of options object to give some instruction on what to render. But what if in React, instead of having one big component responsible for rendering, we create a bunch of components that "compound" together in order to get the unique interaction we're looking for?
+
+Implicit state: non app-level state that the product developer doesn't care about or see in order to use the component API successfully; in React, this is generally accomplished by using React.Children.map and React.cloneElement in order to implicitly pass state-derived or event-callback props to children
+
+```javascript
+class RadioGroup extends Component {
+	render() {
+		state = {
+			value: this.props.defaultValue
+		};
+
+		const children = React.Children.map(this.props.children, child => {
+			return React.cloneElement(child, {
+				isActive: child.props.value === this.state.value,
+				onSelect: () => this.setState({ value: child.props.value })
+			});
+		});
+
+		return (
+			<fieldset className="radio-group">
+				<legend>{this.props.legend}</legend>
+				{children}
+			</fieldset>
+		);
+	}
+}
+
+class RadioButton extends Component {
+	render() {
+		const { isActive, onSelect } = this.props;
+		const className = 'radio-button ' + (isActive ? 'active' : '');
+		return (
+			<button className={className} onClick={onSelect}>
+				{this.props.children}
+			</button>
+		);
+	}
+}
 ```
+
+## Context
+
+Ryan goes ahead and applies context to the tabs example. Now why?
+
+When he adds a div between the TabList and TabPanel, the parent child relationship breaks. The proposition of using context to alleviate a strict parent-child relationship between compound components seems a bit
+contrived, and ultimately adds more abstraction and opaqueness to the code.
+
+My Takeaways from Ryan's Solution to the audio plater.
+Firstly, I am amazed at his elegant approach to coding. Definitely a standard to aspire for henceforth:)
+
+I liked the spreading of state in getChildContext
+I thought it interesting that Ryan Florence uses null values for state that is "unknown" on initial render in a component
+I liked how all of the context was put on an audio object rather than as top-level properties
+Liked the use of a generic jump function and the passing of negative values to jump backwards
+I liked setting currentTime back to zero in onEnded callback, rather than leaving it with the progress bar filled in
+I liked using event.currentTarget instead of using a ref for the progress bar click handler
+
+# Bits of code that baffled me
+
+```javascript
+class Progress extends React.Component {
+	static contextTypes = {
+		audio: object
+	};
+
+	handleClick = e => {
+		const { audio } = this.context;
+		const rect = this.node.getBoundingClientRect();
+		const clientLeft = e.clientX;
+		const relativeLeft = clientLeft - rect.left;
+		audio.setTime((relativeLeft / rect.width) * audio.duration);
+	};
+
+	render() {
+		const { loaded, duration, currentTime } = this.context.audio;
+
+		return (
+			<div
+				className="progress"
+				ref={n => (this.node = n)}
+				onClick={this.handleClick}
+				onKeyDown={this.handleKeyDown}
+			>
+				<div
+					className="progress-bar"
+					style={{
+						width: loaded ? `${(currentTime / duration) * 100}%` : '0%'
+					}}
+				/>
+			</div>
+		);
+	}
+}
+```
+
+When you click on the progress bar
+
+```
+onClick={this.handleClick}
+
+```
+
+It triggers a Handle Click function which sets the
+audio's time to the current rect width clicked by the user.
+
+```javascript
+handleClick = e => {
+	const { audio } = this.context;
+	const rect = this.node.getBoundingClientRect();
+	const clientLeft = e.clientX;
+	const relativeLeft = clientLeft - rect.left;
+	audio.setTime((relativeLeft / rect.width) * audio.duration);
+};
+```
+
+```javascript
+ getChildContext() {
+    return {
+      audio: {
+        ...this.state,
+        setTime: time => {
+          this.audio.currentTime = time;
+        },
+      }
+    }
+ }
+
+```
+
+This change in the state re-renders the Progress Component and updates the width
+
+```javascript
+render() {
+    const { loaded, duration, currentTime } = this.context.audio;
+
+    return (
+      <div
+        className="progress"
+        ref={n => (this.node = n)}
+        onClick={this.handleClick}
+        onKeyDown={this.handleKeyDown}
+      >
+        <div
+          className="progress-bar"
+          style={{
+            width: loaded ? `${currentTime / duration * 100}%` : "0%"
+          }}
+        />
+      </div>
+    );
+  }
+```
+
+> Context can then be used to share and manage state between components regardless of any intermediary UI. It acts as a bit of a wormhole between provider and consumer, breaking the normal boundaries of state management between components via props- Anonymous
+
