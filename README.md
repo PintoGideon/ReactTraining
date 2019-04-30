@@ -148,12 +148,12 @@ contrived, and ultimately adds more abstraction and opaqueness to the code.
 My Takeaways from Ryan's Solution to the audio player.
 Firstly, I am amazed at his elegant approach to coding. Definitely a standard to aspire for henceforth:)
 
-1.I liked the spreading of state in getChildContext
-2.I thought it interesting that Ryan Florence uses null values for state that is "unknown" on initial render in a component
-3.I liked how all of the context was put on an audio object rather than as top-level properties
-4.Liked the use of a generic jump function and the passing of negative values to jump backwards
-5.I liked setting currentTime back to zero in onEnded callback, rather than leaving it with the progress bar filled in
-6.I liked using event.currentTarget instead of using a ref for the progress bar click handler
+-I  liked the spreading of state in getChildContext
+- I thought it interesting that Ryan Florence uses null values for state that is "unknown" on initial render in a component
+- I liked how all of the context was put on an audio object rather than as top-level properties
+- Liked the use of a generic jump function and the passing of negative values to jump backwards
+- I liked setting currentTime back to zero in onEnded callback, rather than leaving it with the progress bar filled in
+- I liked using event.currentTarget instead of using a ref for the progress bar click handler
 
 # Bits of code that baffled me
 
