@@ -18,7 +18,7 @@ for(var i=0, i<numbers.length,i++)
 
 Declarative (what)
 
-````javascript
+```javascript
 var numbers=[4,2,3,6]
 numbers.reduce((previous,current)=>{
 	return previous+=current
