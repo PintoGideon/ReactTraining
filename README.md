@@ -1,6 +1,6 @@
 # My Notes on Class Patterns by Ryan Florence
 
->"One of the things I love about React is that it lets me eliminate time in my code; I don't have to think about time, I just have to think about snapshots in time. At any time in a React app, we can look at the state of the app and then look at the render methods of our components, and we should be able to predict what the screen is going render." — Ryan Florence
+> "One of the things I love about React is that it lets me eliminate time in my code; I don't have to think about time, I just have to think about snapshots in time. At any time in a React app, we can look at the state of the app and then look at the render methods of our components, and we should be able to predict what the screen is going render." — Ryan Florence
 
 #Imperative vs Declarative
 
@@ -44,7 +44,7 @@ Ryan goes further to create a component called Tone to handle the imperative stu
 # Lesson 2
 ## Pin Scoll To Bottom
 
-**scrollTo**: 
+**scrollTo**:
 Window.scrollTo() scrolls to a particular set of coordinates in the document.
 window.scrollTo(x-coord, y-coord)
 window.scrollTo(options)
@@ -52,10 +52,10 @@ window.scrollTo(options)
 **scrollHeight**:
 The Element.scrollHeight read-only property is a measurement of the height of an element's content, including content not visible on the screen due to overflow.
 
-**clientHeight**: 
+**clientHeight**:
 The Element.clientHeight read-only property is zero for elements with no CSS or inline layout boxes; otherwise, it's the inner height of an element in pixels. It includes padding but excludes borders, margins, and horizontal scrollbars (if present).
 
-**scrollTop**: 
+**scrollTop**:
 An element's scrollTop value is a measurement of the distance from the element's top to its topmost visible content. When an element's content does not generate a vertical scrollbar, then its scrollTop value is 0.
 
 >"You can tell when you've got a good abstraction not just when you can add code easily, but when you can remove code easily." — Michael Jackson
@@ -252,4 +252,43 @@ render() {
 ```
 
 > Context can then be used to share and manage state between components regardless of any intermediary UI. It acts as a bit of a wormhole between provider and consumer, breaking the normal boundaries of state management between components via props- Anonymous
+
+# Render Props
+
+In Lecture 4, we created a simple toggle component which toggles shows/hides content on an onClick event. If the state is on, we display props.children.
+
+Now, this component does not give us much flexbility in terms of how we render the content.
+
+### Why Would we want to use RenderProp?
+
+RenderProp simply means passing a property in your component to be rendered.
+
+In the app component, we pass render as a prop which is a function to the ToggleRenderProps component. We can access render props in the ToggleRenderProps component and pass the state and toggle function to it as parameters.
+Now we can use a conditional logic to display some content.
+However, we could use reuse the ToggleRenderProps component and display some other content using a conditional logic. The markup that comes in the render component are totally independent.
+
+### Render Props Children
+
+I used Render Props Children while developing CraftMonkey but could not really get a grip over what was happening. I was following an online tutorial and it did not seem trivial than.
+
+This is our ToggleRenderPropsChildren component in App.js where we define the children as a function
+accepting accepting two arguments. We can pass
+`on` to a component and use it to perform some task.
+
+```javascript
+<ToggleRPC>{({ on, toggle }) => <Component on={on} />}</ToggleRPC>
+```
+
+In ToggleRenderPropsComponent, we can access the children and pass the state and on as parameters.
+
+```javascript
+render() {
+		const { children } = this.props;
+		return children({
+			on: this.state.on,
+			toggle: this.toggle
+		});
+	}
+```
+
 
