@@ -272,7 +272,7 @@ However, we could use reuse the ToggleRenderProps component and display some oth
 I used Render Props Children while developing CraftMonkey but could not really get a grip over what was happening. I was following an online tutorial and it did not seem trivial than.
 
 This is our ToggleRenderPropsChildren component in App.js where we define the children as a function
-accepting accepting two arguments. We can pass
+accepting two arguments. We can pass
 `on` to a component and use it to perform some task.
 
 ```javascript
