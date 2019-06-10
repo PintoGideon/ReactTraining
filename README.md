@@ -2,7 +2,7 @@
 
 > "One of the things I love about React is that it lets me eliminate time in my code; I don't have to think about time, I just have to think about snapshots in time. At any time in a React app, we can look at the state of the app and then look at the render methods of our components, and we should be able to predict what the screen is going render." — Ryan Florence
 
-#Imperative vs Declarative
+#### Imperative vs Declarative
 
 Imperative (How)
 
